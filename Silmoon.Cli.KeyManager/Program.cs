@@ -1,8 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Silmoon;
 using Silmoon.Core.Authorization;
+using Silmoon.Core;
 using Silmoon.Extension;
 using Silmoon.Secure;
+using System;
 using System.Collections.Specialized;
 using System.Security.Cryptography;
 using System.Text.Json;
@@ -48,6 +50,12 @@ static void Entry(string[] args)
                     break;
                 case "--install":
                     InstallToPath();
+                    break;
+                case "--gensmkmuri":
+                    GenSMKMUri(param);
+                    break;
+                case "--decodesmkmuri":
+                    DecodeSMKMUri(param);
                     break;
                 default:
                     Console.WriteLine("Unknown command (" + param[0] + "), or --help.");
@@ -141,6 +149,39 @@ static void RemoveKeyFile(NameValueCollection param, bool force = false)
     {
         Console.WriteLine("No id file.");
     }
+}
+static void GenSMKMUri(NameValueCollection param)
+{
+    if (File.Exists("C:\\_smkey.raw"))
+    {
+        var password = param["--password"];
+        if (password.IsNullOrEmpty())
+        {
+            Console.WriteLine("Please input password.");
+            password = Console.ReadLine();
+        }
+        var fileContent = File.ReadAllText("C:\\_smkey.raw");
+
+        var result = KeyManager.DecodeEncryptedKeyString(fileContent, password);
+        if (result.State)
+        {
+            Console.WriteLine("please input clear string data:");
+            var clearData = Console.ReadLine();
+            var uri = clearData.KeyFileEncryptToSmkmUri(password);
+            Console.WriteLine(uri);
+        }
+        else
+            Console.WriteLine("[ERROR] " + result.Message);
+    }
+    else
+        Console.WriteLine("No id file.");
+}
+static void DecodeSMKMUri(NameValueCollection param)
+{
+    Console.WriteLine("Please smkm uri.");
+    var cipherText = Console.ReadLine();
+    var s = cipherText.TryKeyFileDecryptSmkmUri();
+    Console.WriteLine(s);
 }
 static void Help(NameValueCollection param)
 {
