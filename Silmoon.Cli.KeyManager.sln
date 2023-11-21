@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Silmoon.Cli.KeyManager", "Silmoon.Cli.KeyManager\Silmoon.Cli.KeyManager.csproj", "{4DEF6960-A9AA-4B9D-A0BF-D38F8B272BE5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silmoon.Core", "..\..\银之月标准类型库\Silmoon\Silmoon.Core\Silmoon.Core.csproj", "{0E202E75-BF71-4772-AE1D-A3B0B2669B45}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4DEF6960-A9AA-4B9D-A0BF-D38F8B272BE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DEF6960-A9AA-4B9D-A0BF-D38F8B272BE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DEF6960-A9AA-4B9D-A0BF-D38F8B272BE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DEF6960-A9AA-4B9D-A0BF-D38F8B272BE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E202E75-BF71-4772-AE1D-A3B0B2669B45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E202E75-BF71-4772-AE1D-A3B0B2669B45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E202E75-BF71-4772-AE1D-A3B0B2669B45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E202E75-BF71-4772-AE1D-A3B0B2669B45}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BD7593A0-3268-4E65-B8BF-6CD27E668C4A}
+	EndGlobalSection
+EndGlobal

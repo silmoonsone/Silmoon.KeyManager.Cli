@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>annotations</Nullable>
+    <PublishAot>true</PublishAot>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\银之月标准类型库\Silmoon\Silmoon.Core\Silmoon.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Silmoon">
+      <HintPath>..\..\..\银之月标准类型库\Silmoon\Silmoon\bin\Release\netstandard2.0\Silmoon.dll</HintPath>
+    </Reference>
+    <Reference Include="Silmoon.Extension">
+      <HintPath>..\..\..\银之月标准类型库\Silmoon\Silmoon.Extension\bin\Release\netstandard2.0\Silmoon.Extension.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
