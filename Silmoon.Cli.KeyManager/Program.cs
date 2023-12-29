@@ -187,9 +187,12 @@ static void Help(NameValueCollection param)
 {
     Console.WriteLine("Silmoon authorization/license key manager utility.");
     Console.WriteLine();
-    Console.WriteLine("[--generatekey]\tto generate a local machine id to default path.");
-    Console.WriteLine("[--showkey]\tto show local machine id.");
-    Console.WriteLine("[--removekey]\tto remove local machine id.");
-    Console.WriteLine("push any key to close");
+    Console.WriteLine("--generatekey\tCreate a key file to local machine to default path.");
+    Console.WriteLine("--showkey\tShow local machine default path key file.");
+    Console.WriteLine("--removekey\tRemove local machine default path key file.");
+    Console.WriteLine("--install\tInstall smkm tool to system.");
+    Console.WriteLine("--gensmkmuri\tGenerate a smkmuri.");
+    Console.WriteLine("--decodesmkmuri\tDecode a smkmuri.");
+    Console.WriteLine("Push any key to close.");
     Console.ReadKey();
 }
