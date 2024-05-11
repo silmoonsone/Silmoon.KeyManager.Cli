@@ -16,6 +16,8 @@
     <ToolCommandName>smkm</ToolCommandName>
     <PackageOutputPath>..\packages_out</PackageOutputPath>
     <RepositoryUrl>https://github.com/silmoonsone/Silmoon.Tool.KeyManager</RepositoryUrl>
+    <PackageId>smkm</PackageId>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
