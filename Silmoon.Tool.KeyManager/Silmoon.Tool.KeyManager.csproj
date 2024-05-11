@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>annotations</Nullable>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Title>Silmoon.Tool.KeyManager</Title>
+    <Authors>SILMOON</Authors>
+    <Company>SILMOON LLC</Company>
+    <Description>Silmoon keyfile manager</Description>
+    <PackageTags>silmoon;keyfile;smkm</PackageTags>
+    <PackAsTool>True</PackAsTool>
+    <ToolCommandName>smkm</ToolCommandName>
+    <PackageOutputPath>..\packages_out</PackageOutputPath>
+    <RepositoryUrl>https://github.com/silmoonsone/Silmoon.Tool.KeyManager</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Silmoon" Version="1.2.3" />
+    <PackageReference Include="Silmoon.Core" Version="1.2.3" />
+    <PackageReference Include="Silmoon.Extension" Version="1.2.3" />
+  </ItemGroup>
+
+</Project>
