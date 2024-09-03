@@ -17,14 +17,14 @@
     <PackageOutputPath>..\packages_out</PackageOutputPath>
     <RepositoryUrl>https://github.com/silmoonsone/Silmoon.Tool.KeyManager.git</RepositoryUrl>
     <PackageId>smkm</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.1.0</Version>
     <PackageProjectUrl>https://github.com/silmoonsone/Silmoon.Tool.KeyManager</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Silmoon" Version="1.2.3" />
-    <PackageReference Include="Silmoon.Core" Version="1.2.3" />
-    <PackageReference Include="Silmoon.Extension" Version="1.2.3" />
+    <PackageReference Include="Silmoon" Version="1.4.4" />
+    <PackageReference Include="Silmoon.Core" Version="1.3.0" />
+    <PackageReference Include="Silmoon.Extension" Version="1.4.7" />
   </ItemGroup>
 
 </Project>

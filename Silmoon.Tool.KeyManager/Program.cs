@@ -37,22 +37,22 @@ internal class Program
     private static void Main(string[] args)
     {
         Entry(args);
-
     }
 
     static void Entry(string[] args)
     {
         Args.ParseArgs(args);
-        if (Args.ArgsArray.IsNullOrEmpty()) Console.WriteLine("Silmoon key file tool. \"smkm help\" for help information.");
+        if (Args.ArgsArray.IsNullOrEmpty())
+            Help();
         else
         {
-            switch (Args.ArgsArray[0])
+            switch (Args.ArgsArray[0].ToLower())
             {
                 case "help":
                     Help();
                     break;
                 case "generatekey":
-                    GenerateKeyFile(args.Contains("--force"));
+                    GenerateKeyFile(Args.GetParameter("force") is not null);
                     break;
                 case "view":
                     ViewKeyFile();
@@ -67,7 +67,7 @@ internal class Program
                     DecodeSMKMUri();
                     break;
                 default:
-                    Console.WriteLine("Unknown command (" + Args.ArgsArray[0] + ")");
+                    Console.WriteLine($"Unknown command: {Args.ArgsArray[0]}");
                     break;
             }
         }
@@ -77,7 +77,7 @@ internal class Program
     {
         if (File.Exists(DefaultKeyFilePath) && noCheckFileExists.HasValue && !noCheckFileExists.Value)
         {
-            Console.WriteLine("id file is exists! overwrite? [y/n]");
+            Console.WriteLine("Key file already exists! Overwrite? [y/n]");
             var readLine = Console.ReadLine().ToLower();
             if (readLine == "y")
             {
@@ -85,7 +85,9 @@ internal class Program
                 GenerateKeyFile(true);
             }
             else
-                Console.WriteLine("cancel.");
+            {
+                Console.WriteLine("Operation cancelled.");
+            }
         }
         else
         {
@@ -96,10 +98,10 @@ internal class Program
 
             File.WriteAllText(DefaultKeyFilePath, keyFile);
             File.SetAttributes(DefaultKeyFilePath, FileAttributes.Hidden);
-            Console.WriteLine("Success.");
-            Console.WriteLine("Password: " + password);
-            Console.WriteLine("Key file is saved to " + DefaultKeyFilePath);
-            Console.WriteLine("push any key to close");
+            Console.WriteLine("Key file generated successfully.");
+            Console.WriteLine($"Password: {password}");
+            Console.WriteLine($"Key file saved to {DefaultKeyFilePath}");
+            Console.WriteLine("Press any key to close.");
             Console.ReadKey();
         }
     }
@@ -108,42 +110,51 @@ internal class Program
         if (File.Exists(DefaultKeyFilePath))
         {
             var password = Args.GetParameter("password");
-            var fileContent = File.ReadAllText(DefaultKeyFilePath);
-
-            var result = KeyManager.DecodeEncryptedKeyString(fileContent, password);
-            if (result.State)
+            if (password.IsNullOrEmpty())
             {
-                Console.WriteLine("Name:\r\n" + result.Data.Name + "\r\n");
-                Console.WriteLine("HashId:\r\n" + result.Data.HashId + "\r\n");
-                Console.WriteLine("PublicKey:\r\n" + result.Data.PublicKey + "\r\n");
-                Console.WriteLine("PrivateKey:\r\n" + result.Data.PrivateKey + "\r\n");
+                Console.WriteLine("Password is required to view the key file.");
             }
             else
-                Console.WriteLine("[ERROR] " + result.Message);
+            {
+                var fileContent = File.ReadAllText(DefaultKeyFilePath);
+                var result = KeyManager.DecodeEncryptedKeyString(fileContent, password);
+                if (result.State)
+                {
+                    Console.WriteLine($"Name:\n{result.Data.Name}\n");
+                    Console.WriteLine($"HashId:\n{result.Data.HashId}\n");
+                    Console.WriteLine($"PublicKey:\n{result.Data.PublicKey}\n");
+                    Console.WriteLine($"PrivateKey:\n{result.Data.PrivateKey}\n");
+                }
+                else
+                    Console.WriteLine($"[ERROR] {result.Message}");
+            }
         }
         else
-            Console.WriteLine("No id file.");
+        {
+            Console.WriteLine("No key file found.");
+        }
     }
+
     static void RemoveKeyFile(bool force = false)
     {
         if (File.Exists(DefaultKeyFilePath))
         {
             if (!force)
             {
-                Console.WriteLine("Are you sure to remove id file? [y/n]");
+                Console.WriteLine("Are you sure you want to remove the key file? [y/n]");
                 var readLine = Console.ReadLine().ToLower();
                 if (readLine == "n")
                 {
-                    Console.WriteLine("cancel.");
+                    Console.WriteLine("Operation cancelled.");
                     return;
                 }
             }
             File.Delete(DefaultKeyFilePath);
-            Console.WriteLine("Success.");
+            Console.WriteLine("Key file removed successfully.");
         }
         else
         {
-            Console.WriteLine("No id file.");
+            Console.WriteLine("No key file found.");
         }
     }
     static void GenSMKMUri()
@@ -161,33 +172,33 @@ internal class Program
                 Console.WriteLine(uri);
             }
             else
-                Console.WriteLine("[ERROR] " + result.Message);
+                Console.WriteLine($"[ERROR] {result.Message}");
         }
         else
-            Console.WriteLine("No id file.");
+            Console.WriteLine("No key file found.");
     }
     static void DecodeSMKMUri()
     {
         var cipherText = Args.GetParameter("data");
-        var s = cipherText.TryKeyFileDecryptSmkmUri();
-        Console.WriteLine(s);
+        var result = cipherText.TryKeyFileDecryptSmkmUri();
+        Console.WriteLine(result);
     }
     static void Help()
     {
-        Console.WriteLine("Silmoon authorization/license key manager utility.");
+        Console.WriteLine("Silmoon authorization/license key management utility.");
         Console.WriteLine();
-        Console.WriteLine("generatekey\tCreate a key file to local machine to default path.");
-        Console.WriteLine("\t\t--force\t\tForce overwrite if file exists.");
+        Console.WriteLine("generatekey\tGenerates a key file on the local machine at the default path.");
+        Console.WriteLine("\t\t--force\t\tForce overwrite if the file already exists.");
         Console.WriteLine();
-        Console.WriteLine("removekey\tRemove local machine default path key file.");
-        Console.WriteLine("\t\t--force\t\tForce remove.");
+        Console.WriteLine("removekey\tRemoves the key file from the local machine's default path.");
+        Console.WriteLine("\t\t--force\t\tForce removal.");
         Console.WriteLine();
-        Console.WriteLine("view\t\tShow local machine default path key file.");
-        Console.WriteLine("\t\t--password give password");
+        Console.WriteLine("view\t\tDisplays the key file from the local machine's default path.");
+        Console.WriteLine("\t\t--password\tSpecify the password.");
         Console.WriteLine();
-        Console.WriteLine("encode\t\tGenerate a smkmuri.");
-        Console.WriteLine("\t\t--data\t\tData to encode.");
-        Console.WriteLine("decode\t\tDecode a smkmuri.");
+        Console.WriteLine("encode\t\tGenerates an SMKMURI.");
+        Console.WriteLine("\t\t--data\t\tSpecify the data to encode.");
+        Console.WriteLine();
+        Console.WriteLine("decode\t\tDecodes an SMKMURI.");
     }
-
 }
