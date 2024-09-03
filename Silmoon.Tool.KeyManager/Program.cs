@@ -60,11 +60,11 @@ internal class Program
                 case "removekey":
                     RemoveKeyFile();
                     break;
-                case "encode":
-                    GenSMKMUri();
+                case "encodeuri":
+                    EncodeUri();
                     break;
-                case "decode":
-                    DecodeSMKMUri();
+                case "decodeuri":
+                    DecodeUri();
                     break;
                 default:
                     Console.WriteLine($"Unknown command: {Args.ArgsArray[0]}");
@@ -157,17 +157,24 @@ internal class Program
             Console.WriteLine("No key file found.");
         }
     }
-    static void GenSMKMUri()
+    static void EncodeUri()
     {
         if (File.Exists(DefaultKeyFilePath))
         {
             var password = Args.GetParameter("password");
+            var clearData = Args.GetParameter("data");
+
+            if (password.IsNullOrEmpty() || clearData.IsNullOrEmpty())
+            {
+                Console.WriteLine("Use the parameter --password or -p to specify the key password, and use the parameter --data or -d to specify the encrypted plaintext information.\r\nFor example: smkm encodeuri -p \"PASSWORD\" -d \"PLAINTEXT\"");
+                return;
+            }
+
             var fileContent = File.ReadAllText(DefaultKeyFilePath);
 
             var result = KeyManager.DecodeEncryptedKeyString(fileContent, password);
             if (result.State)
             {
-                var clearData = Args.GetParameter("data");
                 var uri = clearData.KeyFileEncryptToSmkmUri(password);
                 Console.WriteLine(uri);
             }
@@ -177,9 +184,15 @@ internal class Program
         else
             Console.WriteLine("No key file found.");
     }
-    static void DecodeSMKMUri()
+    static void DecodeUri()
     {
         var cipherText = Args.GetParameter("data");
+
+        if (cipherText.IsNullOrEmpty())
+        {
+            Console.WriteLine("Use the parameter --data or -d to specify the ciphertext in smkm uri format.\r\nFor example: smkm decodeuri -d \"smkm://CIPHERTEXT\"");
+            return;
+        }
         var result = cipherText.TryKeyFileDecryptSmkmUri();
         Console.WriteLine(result);
     }
@@ -194,11 +207,9 @@ internal class Program
         Console.WriteLine("\t\t--force\t\tForce removal.");
         Console.WriteLine();
         Console.WriteLine("view\t\tDisplays the key file from the local machine's default path.");
-        Console.WriteLine("\t\t--password\tSpecify the password.");
         Console.WriteLine();
-        Console.WriteLine("encode\t\tGenerates an SMKMURI.");
-        Console.WriteLine("\t\t--data\t\tSpecify the data to encode.");
+        Console.WriteLine("encodeuri\tGenerates an SMKMURI.");
         Console.WriteLine();
-        Console.WriteLine("decode\t\tDecodes an SMKMURI.");
+        Console.WriteLine("decodeuri\tDecodes an SMKMURI.");
     }
 }

@@ -17,7 +17,7 @@
     <PackageOutputPath>..\packages_out</PackageOutputPath>
     <RepositoryUrl>https://github.com/silmoonsone/Silmoon.Tool.KeyManager.git</RepositoryUrl>
     <PackageId>smkm</PackageId>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <PackageProjectUrl>https://github.com/silmoonsone/Silmoon.Tool.KeyManager</PackageProjectUrl>
   </PropertyGroup>
 
