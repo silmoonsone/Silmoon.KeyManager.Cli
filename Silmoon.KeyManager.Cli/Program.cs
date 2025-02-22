@@ -36,12 +36,12 @@ internal class Program
     }
     private static void Main(string[] args)
     {
+        Args.ParseArgs(args);
         Entry(args);
     }
 
     static void Entry(string[] args)
     {
-        Args.ParseArgs(args);
         if (Args.ArgsArray.IsNullOrEmpty())
             Help();
         else

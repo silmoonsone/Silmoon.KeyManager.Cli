@@ -16,15 +16,15 @@
     <ToolCommandName>smkm</ToolCommandName>
     <PackageOutputPath>..\packages_out</PackageOutputPath>
     <RepositoryUrl>https://github.com/silmoonsone/Silmoon.Tool.KeyManager.git</RepositoryUrl>
-    <PackageId>smkm</PackageId>
+    <PackageId>Silmoon.KeyManager.Cli</PackageId>
     <Version>1.1.1</Version>
     <PackageProjectUrl>https://github.com/silmoonsone/Silmoon.Tool.KeyManager</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Silmoon" Version="1.4.4" />
-    <PackageReference Include="Silmoon.Core" Version="1.3.0" />
-    <PackageReference Include="Silmoon.Extension" Version="1.4.7" />
+    <PackageReference Include="Silmoon" Version="1.7.5" />
+    <PackageReference Include="Silmoon.Core" Version="1.3.1" />
+    <PackageReference Include="Silmoon.Extension" Version="1.6.9" />
   </ItemGroup>
 
 </Project>
